@@ -66,11 +66,13 @@ admin-issued invites and must never be exposed to the browser.
 
 ### 3. Seed the first admin
 
-Sign-up is invite-only, so bootstrap one admin manually. Create a user in the
-Supabase dashboard (Authentication → Users), then in the SQL editor:
+Sign-up is invite-only, so bootstrap one admin. Either do it by hand — create a
+user in the Supabase dashboard (Authentication → Users), then in the SQL editor
+`update profiles set role = 'admin' where email = 'you@example.com';` — or run the
+helper (reads `.env.local`):
 
-```sql
-update profiles set role = 'admin' where email = 'you@example.com';
+```bash
+node scripts/create-admin.mjs you@example.com 'a-strong-password'
 ```
 
 That admin can then invite everyone else from the app.
@@ -81,6 +83,30 @@ That admin can then invite everyone else from the app.
 npm install
 npm run dev        # http://localhost:3000
 ```
+
+## Local development with the Supabase CLI
+
+To run the whole stack (Postgres, Auth, Storage) locally instead of against a
+hosted project — this is the flow used to validate Phase 1 end to end:
+
+```bash
+# 1. Start local Supabase (Docker required). Applies supabase/migrations/.
+supabase start
+
+# 2. Point the app at the local stack: copy the printed API URL, anon key, and
+#    service_role key into .env.local (NEXT_PUBLIC_SUPABASE_URL, etc.).
+
+# 3. Seed a confirmed admin and a demo tender from the fixture.
+node scripts/create-admin.mjs
+node scripts/seed-demo.mjs
+
+# 4. Run the app and sign in as admin@azure-tender.local / Passw0rd!123
+npm run dev
+```
+
+`scripts/seed-demo.mjs` stands in for the (Phase 3) extraction job — it loads
+`samples/alain-g242026.json` into a tender with confidence flags and the
+missing-data list, so the review screen has data to show.
 
 ## Scripts
 

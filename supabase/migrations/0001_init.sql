@@ -160,6 +160,16 @@ as $$
 $$;
 
 -- ---------------------------------------------------------------------------
+-- Grants. RLS decides row visibility, but the API roles still need base table
+-- privileges. Hosted Supabase applies these via default privileges; granting
+-- them explicitly keeps the migration self-sufficient on any environment.
+-- ---------------------------------------------------------------------------
+grant usage on schema public to anon, authenticated, service_role;
+grant all on all tables in schema public to anon, authenticated, service_role;
+grant all on all sequences in schema public to anon, authenticated, service_role;
+grant execute on all functions in schema public to anon, authenticated, service_role;
+
+-- ---------------------------------------------------------------------------
 -- Enable RLS
 -- ---------------------------------------------------------------------------
 alter table profiles       enable row level security;
