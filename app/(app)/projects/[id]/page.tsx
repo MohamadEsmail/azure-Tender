@@ -18,8 +18,7 @@ const TRACK_LABELS: Record<string, string> = {
 const TABS: { label: string; href?: (id: string) => string }[] = [
   { label: "نظرة عامة", href: (id) => `/projects/${id}` },
   { label: "البريف", href: (id) => `/projects/${id}/brief` },
-  { label: "تحليل الذكاء" },
-  { label: "الاستراتيجية" },
+  { label: "الاستراتيجية", href: (id) => `/projects/${id}/strategy` },
   { label: "الموودبورد" },
   { label: "الهوية البصرية" },
   { label: "المساحات" },
