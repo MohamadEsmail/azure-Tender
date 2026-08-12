@@ -16,7 +16,7 @@ export default async function AppLayout({
 
   return (
     <div className="min-h-dvh">
-      <header className="border-b border-border">
+      <header className="border-b border-border print:hidden">
         <div className="container flex h-14 items-center justify-between">
           <nav className="flex items-center gap-6">
             <Link href="/dashboard" className="font-semibold">

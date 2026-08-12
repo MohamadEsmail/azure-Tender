@@ -47,3 +47,23 @@ body {
   color: hsl(var(--foreground));
   font-feature-settings: "rlig" 1, "calt" 1;
 }
+
+/* Presentation print/export: one slide per page, keep colours and images. */
+.slide {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+  .deck {
+    gap: 0 !important;
+  }
+  .slide {
+    break-after: page;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+}

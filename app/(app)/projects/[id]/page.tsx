@@ -23,8 +23,7 @@ const TABS: { label: string; href?: (id: string) => string }[] = [
   { label: "الهوية البصرية", href: (id) => `/projects/${id}/visual-dna` },
   { label: "المساحات", href: (id) => `/projects/${id}/spaces` },
   { label: "التصورات ثلاثية الأبعاد", href: (id) => `/projects/${id}/spaces` },
-  { label: "التعديلات" },
-  { label: "العرض التقديمي" },
+  { label: "العرض التقديمي", href: (id) => `/projects/${id}/presentation` },
 ];
 
 export default async function ProjectPage({

@@ -7,6 +7,7 @@ import { handleMoodboard } from "@/lib/jobs/handlers/moodboard";
 import { handleVisualDna } from "@/lib/jobs/handlers/visual-dna";
 import { handleSpacePlan } from "@/lib/jobs/handlers/space-plan";
 import { handleImageGenerate, handleImageRevise } from "@/lib/jobs/handlers/render";
+import { handlePresentation } from "@/lib/jobs/handlers/presentation";
 import type { JobType } from "@/lib/jobs/types";
 
 interface ClaimedJob {
@@ -27,6 +28,7 @@ const HANDLERS: Partial<
   space_plan: handleSpacePlan,
   image_generate: handleImageGenerate,
   image_revise: handleImageRevise,
+  presentation_build: handlePresentation,
 };
 
 /**
