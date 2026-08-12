@@ -38,11 +38,17 @@ export async function createSupabaseServerClient() {
 
 /**
  * Service-role client that BYPASSES Row Level Security. Use only inside
- * background jobs / the worker, never in response to a raw user request.
- * It carries no user identity, so every call must scope its own access.
+ * background jobs / the worker and trusted bootstrap paths, never in response
+ * to a raw user request. It carries no user identity, so every call must scope
+ * its own access.
+ *
+ * Intentionally left untyped by the stand-in Database types: the service client
+ * performs trusted writes across many tables and the hand-authored types are
+ * too loose to type inserts precisely. Once `database.types.ts` is generated
+ * from the live schema, re-add the `<Database>` generic here.
  */
 export function createSupabaseServiceClient() {
-  return createClient<Database>(
+  return createClient(
     serverEnv.supabaseUrl(),
     serverEnv.supabaseServiceRoleKey(),
     { auth: { persistSession: false, autoRefreshToken: false } },
