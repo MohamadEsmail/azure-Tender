@@ -2,6 +2,7 @@ import "server-only";
 import { createSupabaseServiceClient } from "@/lib/db/supabase-server";
 
 export const PROJECT_FILES_BUCKET = "project-files";
+export const PROJECT_ASSETS_BUCKET = "project-assets";
 
 /** Object path convention: "<projectId>/<fileId>-<sanitized name>". */
 export function buildObjectPath(
@@ -21,10 +22,11 @@ export function buildObjectPath(
 export async function createSignedUrl(
   path: string,
   expiresInSeconds = 60 * 30,
+  bucket: string = PROJECT_FILES_BUCKET,
 ): Promise<string> {
   const service = createSupabaseServiceClient();
   const { data, error } = await service.storage
-    .from(PROJECT_FILES_BUCKET)
+    .from(bucket)
     .createSignedUrl(path, expiresInSeconds);
   if (error || !data) {
     throw new Error(error?.message ?? "Failed to sign URL.");
@@ -33,11 +35,12 @@ export async function createSignedUrl(
 }
 
 /** Download an object as bytes (used by the worker to feed the extractor). */
-export async function downloadObject(path: string): Promise<Uint8Array> {
+export async function downloadObject(
+  path: string,
+  bucket: string = PROJECT_FILES_BUCKET,
+): Promise<Uint8Array> {
   const service = createSupabaseServiceClient();
-  const { data, error } = await service.storage
-    .from(PROJECT_FILES_BUCKET)
-    .download(path);
+  const { data, error } = await service.storage.from(bucket).download(path);
   if (error || !data) {
     throw new Error(error?.message ?? "Failed to download object.");
   }
