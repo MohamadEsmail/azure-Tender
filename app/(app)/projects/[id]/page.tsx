@@ -20,7 +20,7 @@ const TABS: { label: string; href?: (id: string) => string }[] = [
   { label: "البريف", href: (id) => `/projects/${id}/brief` },
   { label: "الاستراتيجية", href: (id) => `/projects/${id}/strategy` },
   { label: "الموودبورد", href: (id) => `/projects/${id}/moodboard` },
-  { label: "الهوية البصرية" },
+  { label: "الهوية البصرية", href: (id) => `/projects/${id}/visual-dna` },
   { label: "المساحات" },
   { label: "التصورات ثلاثية الأبعاد" },
   { label: "التعديلات" },

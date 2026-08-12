@@ -4,6 +4,7 @@ import { createSupabaseServiceClient } from "@/lib/db/supabase-server";
 import { handleExtract } from "@/lib/jobs/handlers/extract";
 import { handleStrategy } from "@/lib/jobs/handlers/strategy";
 import { handleMoodboard } from "@/lib/jobs/handlers/moodboard";
+import { handleVisualDna } from "@/lib/jobs/handlers/visual-dna";
 import type { JobType } from "@/lib/jobs/types";
 
 interface ClaimedJob {
@@ -20,6 +21,7 @@ const HANDLERS: Partial<
   extract: handleExtract,
   strategy: handleStrategy,
   moodboard: handleMoodboard,
+  visual_dna: handleVisualDna,
 };
 
 /**
