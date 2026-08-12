@@ -2,6 +2,7 @@ import "server-only";
 import { serverEnv } from "@/lib/env";
 import type { ImageProvider } from "@/lib/providers/image/types";
 import { HiggsfieldImageProvider } from "@/lib/providers/image/higgsfield";
+import { MagnificImageProvider } from "@/lib/providers/image/magnific";
 
 /**
  * Image-provider registry. New engines register here; the rest of the app only
@@ -9,6 +10,7 @@ import { HiggsfieldImageProvider } from "@/lib/providers/image/higgsfield";
  * interface. Instances are created lazily and cached per process.
  */
 const factories: Record<string, () => ImageProvider> = {
+  magnific: () => new MagnificImageProvider(),
   higgsfield: () => new HiggsfieldImageProvider(),
 };
 

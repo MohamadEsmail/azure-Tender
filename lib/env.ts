@@ -28,6 +28,7 @@ export const serverEnv = {
 
   anthropicApiKey: () => required("ANTHROPIC_API_KEY"),
   higgsfieldCredentials: () => required("HF_CREDENTIALS"),
+  magnificApiKey: () => required("MAGNIFIC_API_KEY"),
 
   defaultImageProvider: () => optional("DEFAULT_IMAGE_PROVIDER", "higgsfield"),
   appUrl: () => optional("NEXT_PUBLIC_APP_URL", "http://localhost:3000"),
