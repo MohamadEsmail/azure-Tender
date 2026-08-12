@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Foundation tokens. The product UI is Arabic-first and fully RTL; all spacing
+ * in components must use LOGICAL properties (margin-inline-start, not
+ * margin-left) so the layout mirrors correctly. See CLAUDE.md.
+ */
+:root {
+  --radius: 0.625rem;
+
+  --background: 0 0% 100%;
+  --foreground: 222 20% 12%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 40%;
+  --primary: 222 47% 20%;
+  --primary-foreground: 0 0% 100%;
+  --border: 220 13% 88%;
+  --input: 220 13% 88%;
+  --ring: 222 47% 20%;
+
+  /* Confidence system: green = high confidence, amber = confirm, red = missing */
+  --confidence-green: 142 71% 38%;
+  --confidence-amber: 38 92% 50%;
+  --confidence-red: 0 72% 51%;
+}
+
+.dark {
+  --background: 222 24% 8%;
+  --foreground: 210 20% 96%;
+  --muted: 222 18% 16%;
+  --muted-foreground: 220 12% 65%;
+  --primary: 210 40% 90%;
+  --primary-foreground: 222 47% 12%;
+  --border: 222 16% 22%;
+  --input: 222 16% 22%;
+  --ring: 210 40% 80%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
