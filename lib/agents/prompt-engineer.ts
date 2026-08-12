@@ -1,5 +1,6 @@
 import "server-only";
 import type { CreativeStrategy } from "@/lib/agents/creative-strategist";
+import type { VisualDNA } from "@/lib/agents/art-director";
 import type { AspectRatio } from "@/lib/providers/image/types";
 
 /**
@@ -59,4 +60,53 @@ export function buildMoodboardPrompts(
     // Stable, distinct seed per category → reproducible moodboard.
     seed: 4200 + i,
   }));
+}
+
+const RENDER_QUALITY =
+  "professional event 3D architectural visualization, photorealistic render, cinematic wide-angle, volumetric lighting, high detail, no text, no watermark, no logos";
+
+/** Compose a fixed slice of the Visual DNA that every space render must carry. */
+function dnaClause(dna: VisualDNA): string {
+  const keywords = (dna.architectural_keywords ?? []).join(", ");
+  const materials = (dna.material_palette ?? []).map((m) => m.name).join(", ");
+  const colors = (dna.color_palette ?? []).map((c) => c.name).join(", ");
+  return [
+    dna.master_concept,
+    keywords ? `architectural style: ${keywords}` : "",
+    dna.signature_shape ? `signature shape: ${dna.signature_shape}` : "",
+    materials ? `materials: ${materials}` : "",
+    colors ? `colours: ${colors}` : "",
+    dna.lighting_language ? `lighting: ${dna.lighting_language}` : "",
+  ]
+    .filter(Boolean)
+    .join(". ");
+}
+
+/** Build a space-render prompt from the locked Visual DNA + the space spec. */
+export function buildSpacePrompt(
+  dna: VisualDNA,
+  space: { name_en: string; name_ar: string; requirements: string },
+): string {
+  const forbidden = (dna.forbidden_styles ?? []).join(", ");
+  return (
+    `${space.name_en} — an event zone. ${dnaClause(dna)}. ` +
+    `Requirements: ${space.requirements}. ${RENDER_QUALITY}.` +
+    (forbidden ? ` Avoid: ${forbidden}.` : "")
+  );
+}
+
+/**
+ * Build a revision prompt: keep the base render intact and apply only the
+ * requested change, while still honouring the Visual DNA.
+ */
+export function buildRevisionPrompt(
+  dna: VisualDNA,
+  basePrompt: string,
+  instruction: string,
+): string {
+  const forbidden = (dna.forbidden_styles ?? []).join(", ");
+  return (
+    `${basePrompt}\n\nApply ONLY this change while preserving everything else: ${instruction}.` +
+    (forbidden ? ` Continue to avoid: ${forbidden}.` : "")
+  );
 }

@@ -5,6 +5,8 @@ import { handleExtract } from "@/lib/jobs/handlers/extract";
 import { handleStrategy } from "@/lib/jobs/handlers/strategy";
 import { handleMoodboard } from "@/lib/jobs/handlers/moodboard";
 import { handleVisualDna } from "@/lib/jobs/handlers/visual-dna";
+import { handleSpacePlan } from "@/lib/jobs/handlers/space-plan";
+import { handleImageGenerate, handleImageRevise } from "@/lib/jobs/handlers/render";
 import type { JobType } from "@/lib/jobs/types";
 
 interface ClaimedJob {
@@ -22,6 +24,9 @@ const HANDLERS: Partial<
   strategy: handleStrategy,
   moodboard: handleMoodboard,
   visual_dna: handleVisualDna,
+  space_plan: handleSpacePlan,
+  image_generate: handleImageGenerate,
+  image_revise: handleImageRevise,
 };
 
 /**

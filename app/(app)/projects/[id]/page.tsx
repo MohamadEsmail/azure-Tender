@@ -21,8 +21,8 @@ const TABS: { label: string; href?: (id: string) => string }[] = [
   { label: "الاستراتيجية", href: (id) => `/projects/${id}/strategy` },
   { label: "الموودبورد", href: (id) => `/projects/${id}/moodboard` },
   { label: "الهوية البصرية", href: (id) => `/projects/${id}/visual-dna` },
-  { label: "المساحات" },
-  { label: "التصورات ثلاثية الأبعاد" },
+  { label: "المساحات", href: (id) => `/projects/${id}/spaces` },
+  { label: "التصورات ثلاثية الأبعاد", href: (id) => `/projects/${id}/spaces` },
   { label: "التعديلات" },
   { label: "العرض التقديمي" },
 ];
