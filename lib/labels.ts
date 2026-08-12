@@ -26,6 +26,28 @@ export const PROJECT_TYPE_LABELS: Record<ProjectType, string> = {
   hybrid: "مختلط",
 };
 
+/** Brief Intelligence section labels (Arabic). Client-safe (no server-only). */
+export const BRIEF_SECTION_LABELS: Record<string, string> = {
+  event_information: "معلومات الفعالية",
+  objectives: "الأهداف",
+  audience: "الجمهور المستهدف",
+  venue: "الموقع",
+  experience_requirements: "متطلبات التجربة",
+  spatial_requirements: "المتطلبات المكانية",
+  content_requirements: "متطلبات المحتوى",
+  branding_requirements: "متطلبات الهوية",
+  technical_requirements: "المتطلبات التقنية",
+  production_requirements: "متطلبات الإنتاج",
+  deliverables: "المخرجات المطلوبة",
+  constraints: "القيود",
+};
+
+export const CONFIDENCE_LABELS: Record<string, string> = {
+  green: "مؤكد",
+  amber: "بحاجة تأكيد",
+  red: "ناقص",
+};
+
 /** Colour class for a status pill, keyed loosely by phase. */
 export function statusTone(status: ProjectStatus): string {
   if (status === "delivered" || status === "approved")

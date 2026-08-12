@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProject } from "@/lib/data/projects";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,19 +13,19 @@ const TRACK_LABELS: Record<string, string> = {
   creative: "الإبداعي",
 };
 
-// The project workspace tabs, per ARCHITECTURE.md §17. Each becomes a real
-// screen as its module lands; today only the overview is active.
-const TABS = [
-  "نظرة عامة",
-  "البريف",
-  "تحليل الذكاء",
-  "الاستراتيجية",
-  "الموودبورد",
-  "الهوية البصرية",
-  "المساحات",
-  "التصورات ثلاثية الأبعاد",
-  "التعديلات",
-  "العرض التقديمي",
+// The project workspace tabs, per ARCHITECTURE.md §17. A tab links out once its
+// module lands; the rest are inert until built.
+const TABS: { label: string; href?: (id: string) => string }[] = [
+  { label: "نظرة عامة", href: (id) => `/projects/${id}` },
+  { label: "البريف", href: (id) => `/projects/${id}/brief` },
+  { label: "تحليل الذكاء" },
+  { label: "الاستراتيجية" },
+  { label: "الموودبورد" },
+  { label: "الهوية البصرية" },
+  { label: "المساحات" },
+  { label: "التصورات ثلاثية الأبعاد" },
+  { label: "التعديلات" },
+  { label: "العرض التقديمي" },
 ];
 
 export default async function ProjectPage({
@@ -57,18 +58,25 @@ export default async function ProjectPage({
 
       {/* Tab strip — navigation wires up as each module ships. */}
       <div className="flex flex-wrap gap-2 border-b border-border pb-2 text-sm">
-        {TABS.map((tab, i) => (
-          <span
-            key={tab}
-            className={
-              i === 0
-                ? "rounded-md bg-muted px-3 py-1 font-medium"
-                : "px-3 py-1 text-muted-foreground"
-            }
-          >
-            {tab}
-          </span>
-        ))}
+        {TABS.map((tab, i) =>
+          tab.href ? (
+            <Link
+              key={tab.label}
+              href={tab.href(project.id)}
+              className={
+                i === 0
+                  ? "rounded-md bg-muted px-3 py-1 font-medium"
+                  : "px-3 py-1 text-muted-foreground hover:text-foreground"
+              }
+            >
+              {tab.label}
+            </Link>
+          ) : (
+            <span key={tab.label} className="px-3 py-1 text-muted-foreground/50">
+              {tab.label}
+            </span>
+          ),
+        )}
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -76,14 +84,17 @@ export default async function ProjectPage({
           <CardHeader>
             <CardTitle>الخطوة التالية</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2 text-sm text-muted-foreground">
+          <CardContent className="space-y-3 text-sm text-muted-foreground">
             <p>
-              ارفع بريف العميل (PDF / Word / PowerPoint / صور / نص) ليبدأ
-              الاستخراج وبناء تقرير ذكاء البريف مع درجات الثقة ومصادر الصفحات.
+              ارفع بريف العميل (PDF / صور / نص) ليبدأ الاستخراج وبناء تقرير ذكاء
+              البريف مع درجات الثقة ومصادر الصفحات.
             </p>
-            <p className="text-xs">
-              وحدة رفع البريف والاستخراج هي الوحدة التالية قيد التطوير.
-            </p>
+            <Link
+              href={`/projects/${project.id}/brief`}
+              className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              رفع البريف والاستخراج
+            </Link>
           </CardContent>
         </Card>
 

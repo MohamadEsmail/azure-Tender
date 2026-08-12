@@ -31,6 +31,9 @@ export const serverEnv = {
 
   defaultImageProvider: () => optional("DEFAULT_IMAGE_PROVIDER", "higgsfield"),
   appUrl: () => optional("NEXT_PUBLIC_APP_URL", "http://localhost:3000"),
+
+  /** Shared secret the worker endpoint checks before running jobs. */
+  workerSecret: () => required("WORKER_SECRET"),
 };
 
 /** Public config that is safe to expose to the browser (RLS-gated). */
